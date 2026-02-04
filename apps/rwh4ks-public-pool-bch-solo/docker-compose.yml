@@ -1,0 +1,98 @@
+version: "3.8"
+
+services:
+  # Umbrel uses this to route the "Open" button to your app
+  app_proxy:
+    environment:
+      APP_HOST: rwh4ks-public-pool-bch-solo_public-pool_1
+      APP_PORT: 3564
+
+  bchn:
+    image: zquestz/bitcoin-cash-node:latest
+    restart: on-failure
+    stop_grace_period: 60s
+    command:
+      - -printtoconsole
+      - -server=1
+      - -prune=${APP_BCHN_PRUNE_MIB}
+      - -rpcbind=0.0.0.0
+      - -rpcallowip=0.0.0.0/0
+      - -rpcuser=${APP_BCHN_RPC_USER}
+      - -rpcpassword=${APP_BCHN_RPC_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/data/bchn:/home/bitcoin/.bitcoin
+    networks:
+      - internal
+    # IMPORTANT: do not expose 8332/8333 to host
+
+  mariadb:
+    image: mariadb:11
+    restart: on-failure
+    stop_grace_period: 60s
+    environment:
+      MYSQL_DATABASE: ${APP_MARIADB_DATABASE}
+      MYSQL_USER: ${APP_MARIADB_USER}
+      MYSQL_PASSWORD: ${APP_MARIADB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${APP_MARIADB_ROOT_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/data/mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+  memcached:
+    image: memcached:1.6
+    restart: on-failure
+    stop_grace_period: 60s
+    command: ["-m", "256", "-o", "modern"]
+    networks:
+      - internal
+
+  yiimp:
+    image: ghcr.io/rwh4ks/yiimp-arm64:0.1.0
+    restart: on-failure
+    stop_grace_period: 60s
+    depends_on:
+      - mariadb
+      - memcached
+    environment:
+      DB_HOST: mariadb
+      DB_NAME: ${APP_MARIADB_DATABASE}
+      DB_USER: ${APP_MARIADB_USER}
+      DB_PASS: ${APP_MARIADB_PASSWORD}
+      MEMCACHED_HOST: memcached
+    networks:
+      - internal
+
+  public-pool:
+    image: ghcr.io/rwh4ks/public-pool-arm64:0.1.0
+    restart: on-failure
+    stop_grace_period: 60s
+    depends_on:
+      - bchn
+      - yiimp
+      - mariadb
+      - memcached
+    environment:
+      BCH_RPC_URL: http://bchn:8332
+      BCH_RPC_USER: ${APP_BCHN_RPC_USER}
+      BCH_RPC_PASS: ${APP_BCHN_RPC_PASSWORD}
+
+      STRATUM_PORT: 3563
+      API_PORT: 3564
+
+      DB_HOST: mariadb
+      DB_NAME: ${APP_MARIADB_DATABASE}
+      DB_USER: ${APP_MARIADB_USER}
+      DB_PASS: ${APP_MARIADB_PASSWORD}
+      MEMCACHED_HOST: memcached
+
+    ports:
+      - "${APP_PUBLIC_POOL_STRATUM_PORT}:3563"
+      - "${APP_PUBLIC_POOL_API_PORT}:3564"
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+    internal: true
