@@ -1,0 +1,24 @@
+manifestVersion: 1
+id: rwh-ks-public-pool-bch-solo
+name: RWH4KS Public Pool (BCH Solo)
+tagline: Solo-mine BCH on ARM64 with your own self-contained pool + pruned node.
+category: Utilities
+version: "0.1.0"
+port: 3564
+
+# Use raw URL to avoid any "relative path" edge cases in some Umbrel builds:
+icon: https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/main/apps/rwh4ks-public-pool-bch-solo/icon.png
+
+description: >-
+  Self-contained BCH solo-mining backend on ARM64 (Raspberry Pi 4/5).
+  Includes a pruned BCHN node, pool backend services, and a Stratum + API server.
+  No external BCH node required.
+
+developer: RWH4KS
+website: https://github.com/RWH4KS
+support: https://github.com/RWH4KS/rwh4ks-umbrel-app-store/issues
+
+# Optional but safe:
+dependencies: []
+gallery:
+  - https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/main/apps/rwh4ks-public-pool-bch-solo/icon.png
