@@ -21,4 +21,4 @@ support: https://github.com/RWH4KS/rwh4ks-umbrel-app-store/issues
 # Optional but safe:
 dependencies: []
 gallery:
-  - https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/main/apps/rwh4ks-public-pool-bch-solo/icon.png
+  - https://upload.wikimedia.org/wikipedia/commons/5/56/BitcoinCash.svg
