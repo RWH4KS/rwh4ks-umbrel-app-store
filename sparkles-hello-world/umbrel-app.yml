@@ -13,6 +13,8 @@ description: >-
   Self-contained BCH solo-mining backend on ARM64 (Raspberry Pi 4/5).
   Includes a pruned BCHN node, pool backend services, and a Stratum + API server.
   No external BCH node required.
+  If you find this app useful, please consider a donation
+  BCH-bitcoincash:qpzmuf06ter60mjrhpuju6wmmdfnfek6nydznjw5ht
 
 developer: RWH4KS
 website: https://github.com/RWH4KS
