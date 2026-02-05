@@ -1,7 +1,6 @@
 version: "3.8"
 
 services:
-  # Umbrel uses this to route the "Open" button to your app
   app_proxy:
     environment:
       APP_HOST: rwh4ks-public-pool-bch-solo_public-pool_1
