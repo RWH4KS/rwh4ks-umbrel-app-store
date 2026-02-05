@@ -7,7 +7,7 @@ version: "0.1.0"
 port: 3564
 
 # Use raw URL to avoid any "relative path" edge cases in some Umbrel builds:
-icon: https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/main/rwh4ks-public-pool-bch-solo/icon.png
+icon: https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/master/sparkles-hello-world/icon.png
 
 description: >-
   Self-contained BCH solo-mining backend on ARM64 (Raspberry Pi 4/5).
