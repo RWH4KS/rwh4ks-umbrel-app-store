@@ -6,7 +6,6 @@ category: Utilities
 version: "0.1.0"
 port: 3564
 
-# Use raw URL to avoid any "relative path" edge cases in some Umbrel builds:
 icon: https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/master/sparkles-hello-world/icon.png
 
 description: >-
@@ -25,7 +24,9 @@ developer: RWH4KS
 website: https://github.com/RWH4KS
 support: https://github.com/RWH4KS/rwh4ks-umbrel-app-store/issues
 
-# Optional but safe:
 dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
 gallery:
   - https://upload.wikimedia.org/wikipedia/commons/5/56/BitcoinCash.svg
