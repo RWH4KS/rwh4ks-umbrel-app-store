@@ -1,0 +1,27 @@
+manifestVersion: 1
+id: rwh4ks-public-pool-bch-solo
+name: RWH4KS Public Pool (BCH Solo)
+tagline: Solo-mine BCH on ARM64 with your own self-contained pool + pruned node
+icon: https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/main/apps/rwh4ks-public-pool-bch-solo/icon.png
+category: Utilities
+version: "0.1.0"
+port: 3564
+description: >-
+  RWH4KS Public Pool (BCH Solo) is an ARM64-focused Umbrel app that runs a complete
+
+  
+  Bitcoin Cash solo-mining backend on a Raspberry Pi 4/5.
+  
+
+  It includes a pruned BCHN node, pool backend services, and a Stratum + API server.
+
+  
+  No external BCH node is required.
+
+  
+  Notice - Solo mining has high variance. You may mine for long
+
+  
+  periods without finding a block, even if everything is working correctly.
+
+developer: RWH4KS
