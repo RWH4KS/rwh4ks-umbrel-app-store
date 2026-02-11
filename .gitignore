@@ -1,0 +1,24 @@
+# Local env
+.env
+**/.env
+**/*.env
+
+# Backups
+*.BAK.*
+*.WORKING_SNAPSHOT.*
+*.PRE_RELEASE.*
+**/*.BAK.*
+**/*.WORKING_SNAPSHOT.*
+**/*.PRE_RELEASE.*
+
+# App data
+data/
+**/data/
+umbrel/app-data/
+**/app-data/
+
+# Junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
