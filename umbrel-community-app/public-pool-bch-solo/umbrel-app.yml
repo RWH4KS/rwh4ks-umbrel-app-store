@@ -1,0 +1,18 @@
+manifestVersion: 1
+
+id: public-pool-bch-solo
+name: Public Pool (BCH Solo)
+version: "0.1.0"
+tagline: BCH solo mining pool + UI
+icon: ./assets/icon.png
+category: Utilities
+version: "0.1.0"
+description: >
+  Self-hosted BCH solo mining pool with BCHN (pruned), Stratum, API, and a simple UI dashboard.
+
+developer: RWH4KS
+port: 80
+services:
+  - public-pool-ui
+
+dependencies: []
