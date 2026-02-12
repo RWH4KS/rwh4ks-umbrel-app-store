@@ -1,0 +1,10 @@
+manifestVersion: 1
+id: rwh4ks-app-store
+name: RWH4KS App Store
+tagline: Community apps by RWH4KS
+icon: ./assets/icon.png
+category: Utilities
+apps:
+  - id: public-pool-bch-solo
+    name: Public Pool (BCH Solo)
+    path: ./rwh4ks-public-pool-bch-solo
