@@ -1,0 +1,7 @@
+services:
+  app_proxy:
+    image: getumbrel/app-proxy:1.0.0
+    restart: on-failure
+    environment:
+      APP_HOST: public-pool-ui
+      APP_PORT: 80
