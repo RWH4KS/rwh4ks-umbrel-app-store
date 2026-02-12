@@ -1,6 +1,6 @@
 manifestVersion: 1
 
-id: public-pool-bch-solo
+id: rwh4ks-public-pool-bch-solo
 name: Public Pool (BCH Solo)
 version: "0.1.0"
 tagline: BCH solo mining pool + UI
