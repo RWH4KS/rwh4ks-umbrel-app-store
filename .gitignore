@@ -22,3 +22,6 @@ umbrel/app-data/
 Thumbs.db
 *.swp
 *.swo
+
+# Local build/test folder
+umbrel-app/
