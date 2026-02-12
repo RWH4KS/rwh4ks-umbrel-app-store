@@ -1,0 +1,4 @@
+services:
+  public-pool-ui:
+    ports:
+      - "8090:80"
