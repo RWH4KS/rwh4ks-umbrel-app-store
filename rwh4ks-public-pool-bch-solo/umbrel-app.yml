@@ -2,7 +2,7 @@ manifestVersion: 1
 id: rwh-ks-public-pool-bch-solo
 name: RWH4KS Public Pool (BCH Solo)
 tagline: Solo-mine BCH on ARM64 with your own self-contained pool + pruned node
-icon: https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/main/apps/rwh4ks-public-pool-bch-solo/icon.png
+icon: icon.png
 category: Utilities
 version: "0.1.0"
 port: 3564
@@ -16,3 +16,8 @@ description: >-
    ** This pool software currently expects a Legacy (Base58) BCH address. Please convert it using a trusted converter.
 
 developer: RWH4KS
+gallery:
+  - hero.svg
+services:
+  - public-pool
+dependencies: []
