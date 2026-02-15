@@ -13,7 +13,7 @@ services:
     restart: on-failure
     stop_grace_period: 60s
     command:
-      /opt/bin/bitcoind
+      - /opt/bin/bitcoind
       - -printtoconsole
       - -server=1
       - -prune=${APP_BCHN_PRUNE_MIB}
