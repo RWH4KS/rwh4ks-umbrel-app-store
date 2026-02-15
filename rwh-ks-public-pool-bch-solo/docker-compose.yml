@@ -4,7 +4,7 @@ services:
   # Umbrel uses this to route the "Open" button to your app
   app_proxy:
     environment:
-      APP_HOST: public-pool
+      APP_HOST: dashboard
       APP_PORT: 80
 
   bchn:
@@ -80,7 +80,7 @@ services:
       - mariadb
       - memcached
     environment:
-      BCH_RPC_URL: http://bchn:8332
+      BCH_RPC_URL: http://bchn-1:8332
       BCH_RPC_USER: ${APP_BCHN_RPC_USER}
       BCH_RPC_PASS: ${APP_BCHN_RPC_PASSWORD}
 
