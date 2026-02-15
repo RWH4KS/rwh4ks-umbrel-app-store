@@ -105,6 +105,7 @@ services:
     stop_grace_period: 10s
     networks:
       - internal
+      - umbrel_main_network
     volumes:
       - ${APP_DATA_DIR}/dashboard:/usr/share/nginx/html:ro
     container_name: rwh-ks-public-pool-bch-solo_dashboard_1
@@ -113,3 +114,5 @@ networks:
   internal:
     driver: bridge
     internal: true
+  umbrel_main_network:
+    external: true
