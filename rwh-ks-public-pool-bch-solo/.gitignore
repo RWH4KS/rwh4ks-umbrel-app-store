@@ -1,0 +1,16 @@
+# Runtime data
+data/
+.env
+.env.*
+*.log
+
+# OS / temp
+*.swp
+*.bak
+*.tmp
+
+# Smoke/test files
+docker-compose.smoke.override.yml
+
+# Node / misc
+node_modules/

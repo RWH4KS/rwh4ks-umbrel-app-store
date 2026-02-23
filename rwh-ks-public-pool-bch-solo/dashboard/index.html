@@ -1,21 +1,481 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>RWH4KS BCH Solo Pool</title>
-    <style>
-      body { font-family: sans-serif; margin: 24px; }
-      code { background:#eee; padding:2px 6px; border-radius:6px; }
-      .box { border:1px solid #ddd; border-radius:12px; padding:16px; max-width:720px; }
-    </style>
-  </head>
-  <body>
-    <h1>RWH4KS BCH Solo Pool</h1>
-    <div class="box">
-      <p>Dashboard is online.</p>
-      <p>Stratum: <code>tcp://&lt;umbrel-ip&gt;:3563</code></p>
-      <p>API: <code>http://&lt;umbrel-ip&gt;:3564</code></p>
-      <p>Tip: If you want this page to show live stats, we can proxy API endpoints and render JSON.</p>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BCH Solo Pool Dashboard</title>
+  <style>
+    :root { color-scheme: dark; }
+
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:#0b0b0c;
+      color:#f3f3f4;
+    }
+
+    header{
+      padding:24px 20px 10px;
+      border-bottom:1px solid #232326;
+      background:#0b0b0c;
+    }
+
+    h1{ margin:0; font-size:28px; font-weight:800; letter-spacing:-0.02em; }
+
+    .sub{ margin-top:6px; color:#b7b7bb; font-size:13px; }
+
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border:1px solid #232326;
+      border-radius:999px;
+      margin-right:8px;
+      margin-top:8px;
+      background:#0f0f12;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color:#e8e8ea;
+      white-space:nowrap;
+    }
+
+    .wrap{ padding:18px 20px 30px; max-width:1200px; margin:0 auto; }
+
+    .row{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:10px;
+      color:#b7b7bb;
+      font-size:13px;
+    }
+
+    button{
+      border:1px solid #232326;
+      background:#0f0f12;
+      color:#f3f3f4;
+      padding:8px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    button:active{ transform:translateY(1px); }
+
+    .statsGrid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:14px;
+    }
+    .statsGrid.two{
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    @media (max-width: 980px){
+      .statsGrid{ grid-template-columns: 1fr; }
+      .statsGrid.two{ grid-template-columns: 1fr; }
+    }
+
+    .statCard{
+      border:1px solid #232326;
+      border-radius:14px;
+      background:#111114;
+      padding:14px;
+    }
+    .statLabel{
+      font-size:12px;
+      color:#b7b7bb;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      margin-bottom:8px;
+    }
+    .statValue{
+      font-size:26px;
+      font-weight:800;
+      letter-spacing:-0.02em;
+      color:#f3f3f4;
+      line-height:1.1;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    .statSub{
+      margin-top:8px;
+      font-size:12px;
+      color:#b7b7bb;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    .tableCard{
+      margin-top:14px;
+      border:1px solid #232326;
+      border-radius:14px;
+      background:#111114;
+      overflow:hidden;
+    }
+    .tableHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-bottom:1px solid #232326;
+      background:#0f0f12;
+    }
+    .tableTitle{
+      margin:0;
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      color:#e8e8ea;
+    }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:13px;
+    }
+    th, td{
+      padding:12px 16px;
+      border-bottom:1px solid #232326;
+      vertical-align:top;
+    }
+    th{
+      text-align:left;
+      color:#b7b7bb;
+      font-weight:700;
+      background:#111114;
+      position:sticky;
+      top:0;
+    }
+    tr:hover td{ background:#0f0f12; }
+    .right{ text-align:right; }
+    .muted{ color:#b7b7bb; }
+
+    footer{
+      margin-top:18px;
+      padding-top:16px;
+      border-top:1px solid #232326;
+      color:#b7b7bb;
+      font-size:13px;
+    }
+
+    .banner{
+      margin-top:14px;
+      border:1px solid #3a2a14;
+      background:#14110b;
+      border-radius:14px;
+      padding:12px 14px;
+      color:#f1e7d2;
+    }
+    .banner strong{ color:#fff; }
+    .banner.hidden{ display:none; }
+    .bannerRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .banner small{
+      display:block;
+      margin-top:6px;
+      color:#cdbf9f;
+      line-height:1.35;
+    }
+    .btnSecondary{
+      border:1px solid #3a2a14;
+      background:#0f0f12;
+      color:#f1e7d2;
+      padding:8px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:800;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>BCH Solo Pool Dashboard</h1>
+    <div class="sub">
+      Stratum:
+      <span class="pill" id="stratum">stratum+tcp://umbrel.local:3563</span>
+      API:
+      <span class="pill">/api/info</span>
+      <span class="pill">/api/pool</span>
+      <span class="pill">/api/network</span>
     </div>
-  </body>
+  </header>
+
+  <div class="wrap">
+    <div class="row">
+      <div class="sub">
+        Auto-refresh: <span id="refreshMs">5000</span> ms •
+        Last update: <span id="last">—</span> •
+        Status: <span class="mono" id="status">starting…</span>
+      </div>
+      <button id="refreshNow">Refresh now</button>
+    </div>
+
+    <div id="firstRunBanner" class="banner hidden">
+      <div class="bannerRow">
+        <div>
+          <strong>First-run setup:</strong> You are running default passwords.
+          <small>
+            For safety (especially if you expose this beyond your LAN),
+            edit <span class="mono">exports.sh</span> and change
+            <span class="mono">APP_BCHN_RPC_PASSWORD</span> / DB passwords.
+          </small>
+        </div>
+        <button class="btnSecondary" id="hideFirstRunBannerBtn" type="button">Hide</button>
+      </div>
+    </div>
+
+    <div class="statsGrid">
+      <div class="statCard">
+        <div class="statLabel">Block Height</div>
+        <div class="statValue" id="statBlockHeight">—</div>
+        <div class="statSub muted">Source: /api/pool.blockHeight</div>
+      </div>
+
+      <div class="statCard">
+        <div class="statLabel">Network Diff</div>
+        <div class="statValue" id="statNetworkDiff">—</div>
+        <div class="statSub muted">Source: /api/network.difficulty</div>
+      </div>
+
+      <div class="statCard">
+        <div class="statLabel">Pool’s Best Diff</div>
+        <div class="statValue" id="statPoolBestDiff">—</div>
+        <div class="statSub muted">Best effort from /api/info.userAgents</div>
+      </div>
+    </div>
+
+    <div class="statsGrid two">
+      <div class="statCard">
+        <div class="statLabel">Total Pool Hashrate</div>
+        <div class="statValue" id="statTotalHashrate">—</div>
+        <div class="statSub muted">Source: /api/pool.totalHashRate</div>
+      </div>
+
+      <div class="statCard">
+        <div class="statLabel">Blocks Found</div>
+        <div class="statValue" id="statBlocksFound">—</div>
+        <div class="statSub muted">Source: /api/pool.blocksFound.length</div>
+      </div>
+    </div>
+
+    <div class="tableCard">
+      <div class="tableHead">
+        <div class="tableTitle">Workers</div>
+        <div class="mono muted">Top by hashrate • Best effort from /api/info.userAgents</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Worker</th>
+            <th class="right">Hashrate</th>
+            <th class="right">BestDiff</th>
+          </tr>
+        </thead>
+        <tbody id="workersBody">
+          <tr><td colspan="3" class="muted">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer>
+      <div><strong>Donations for Development</strong> (thank you)</div>
+      <div class="pill">BCH: bitcoincash:qpzmuf06ter60mjrhpuju6wmmdfnfek6nydznjw5ht</div>
+      <div class="pill">BCH Legacy: 17MmQyaBxdQp1E5WqU3T8iBBtcfFwRtxGd</div>
+      <div class="pill">BTC: bc1qj2l9ad4zx2qpvq4nqxj3s7vdvj5xvmrrcxx5p8</div>
+      <div class="pill">DGB: DP7wEvbQP5tgoqcUwBggXh95WUs7i9ciGS</div>
+      <div class="pill">BC2: bc1q4dfg2nxnxgpxxf5lq0cmgysjpjmw3ly8tkjc85</div>
+
+      <div class="sub" style="margin-top:10px;">
+        Tip: If miners don’t connect, check your worker URL, LAN reachability. Try using a Legacy wallet. Use trusted convertion tools.
+        *Note this pool has workers set up as 'userAgents' meaning if the client(workers) use the same software such as; Bitaxe/Antminer/Braiins/etc. the device will collapse into one bucket.
+        **Miners may take ~5 min to show up. Hashrate usually stabilizes after ~10 min & Best Diff appears within ~20 min depending on recent shares.
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const REFRESH = 5000;
+
+    // Auto-detect Stratum host (no hardcoded LAN IP)
+    function setStratumFromHost() {
+      const host = (location && location.hostname) ? location.hostname : "umbrel.local";
+      const el = document.getElementById("stratum");
+      if (el) el.textContent = `stratum+tcp://${host}:3563`;
+    }
+
+    function showFirstRunBannerIfNeeded() {
+      const banner = document.getElementById("firstRunBanner");
+      if (!banner) return;
+
+      const disabled = localStorage.getItem("hideFirstRunBanner") === "1";
+      banner.classList.toggle("hidden", disabled);
+    }
+
+    function hideFirstRunBanner() {
+      localStorage.setItem("hideFirstRunBanner", "1");
+      const banner = document.getElementById("firstRunBanner");
+      if (banner) banner.classList.add("hidden");
+    }
+
+    function formatSI(n, units) {
+      if (n == null || !isFinite(n)) return "—";
+      const sign = n < 0 ? "-" : "";
+      n = Math.abs(n);
+
+      if (n === 0) return "0";
+
+      let i = 0;
+      while (n >= 1000 && i < units.length - 1) {
+        n /= 1000;
+        i++;
+      }
+
+      const decimals = (n >= 100) ? 0 : (n >= 10 ? 1 : 2);
+      return sign + n.toFixed(decimals) + units[i];
+    }
+
+    function formatDiff(diff) {
+      return formatSI(Number(diff), ["", "K", "M", "G", "T", "P", "E", "Z"]);
+    }
+
+    function formatHashrate(h) {
+      if (h == null || !isFinite(h)) return "—";
+      const n = Number(h);
+      return formatSI(n, ["H/s", "KH/s", "MH/s", "GH/s", "TH/s", "PH/s", "EH/s", "ZH/s"]);
+    }
+
+    function safeWorkerLabel(ua) {
+      return (
+        ua.worker ||
+        ua.workerName ||
+        ua.name ||
+        ua.userAgent ||
+        ua.agent ||
+        ua.ip ||
+        ua.address ||
+        "unknown"
+      );
+    }
+
+    function safeHashrateFromUA(ua) {
+      const x = ua.totalHashRate ?? ua.hashrate ?? ua.hashRate ?? 0;
+      const n = Number(x);
+      return isFinite(n) ? n : 0;
+    }
+
+    function safeBestDiffFromUA(ua) {
+      const x = ua.bestDiff ?? ua.bestDifficulty ?? ua.best_difficulty ?? ua.best ?? ua.bestShare ?? null;
+      const n = Number(x);
+      return isFinite(n) ? n : null;
+    }
+
+    async function fetchJson(path) {
+      const r = await fetch(path, { cache: "no-store" });
+      if (!r.ok) throw new Error(`${path} -> HTTP ${r.status}`);
+      return r.json();
+    }
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function renderWorkers(userAgents) {
+      const body = document.getElementById("workersBody");
+      if (!body) return;
+
+      const rows = Array.isArray(userAgents) ? userAgents.slice() : [];
+      rows.sort((a,b) => safeHashrateFromUA(b) - safeHashrateFromUA(a));
+
+      if (rows.length === 0) {
+        body.innerHTML = `<tr><td colspan="3" class="muted">No workers yet (connect miners and wait for shares).</td></tr>`;
+        return;
+      }
+
+      const N = 20;
+      const shown = rows.slice(0, N);
+
+      body.innerHTML = shown.map(ua => {
+        const worker = safeWorkerLabel(ua);
+        const hr = formatHashrate(safeHashrateFromUA(ua));
+        const bdRaw = safeBestDiffFromUA(ua);
+        const bd = bdRaw == null ? "—" : formatDiff(bdRaw);
+        return `
+          <tr>
+            <td class="mono">${escapeHtml(String(worker))}</td>
+            <td class="right mono">${escapeHtml(String(hr))}</td>
+            <td class="right mono">${escapeHtml(String(bd))}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function escapeHtml(s){
+      return s.replace(/[&<>"']/g, (c) => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[c]));
+    }
+
+    async function refresh() {
+      try {
+        const [info, pool, network] = await Promise.all([
+          fetchJson("/api/info"),
+          fetchJson("/api/pool"),
+          fetchJson("/api/network"),
+        ]);
+
+        const blockHeight = pool?.blockHeight ?? network?.blocks ?? "—";
+        setText("statBlockHeight", String(blockHeight));
+
+        setText("statNetworkDiff", formatDiff(network?.difficulty));
+
+        setText("statTotalHashrate", formatHashrate(pool?.totalHashRate));
+
+        const found = Array.isArray(pool?.blocksFound) ? pool.blocksFound.length : 0;
+        setText("statBlocksFound", String(found));
+
+        const uas = Array.isArray(info?.userAgents) ? info.userAgents : [];
+        const best = uas
+          .map(safeBestDiffFromUA)
+          .filter(v => v != null && isFinite(v))
+          .reduce((acc, v) => acc == null ? v : Math.max(acc, v), null);
+
+        setText("statPoolBestDiff", best == null ? "—" : formatDiff(best));
+
+        renderWorkers(uas);
+
+        setText("last", new Date().toLocaleString());
+        setText("status", "ok");
+      } catch (e) {
+        setText("status", "error");
+        const body = document.getElementById("workersBody");
+        if (body) body.innerHTML = `<tr><td colspan="3" class="muted">Error: ${escapeHtml(String(e))}</td></tr>`;
+      }
+    }
+
+    document.getElementById("refreshMs").textContent = REFRESH;
+    document.getElementById("refreshNow").onclick = refresh;
+
+    const hideBtn = document.getElementById("hideFirstRunBannerBtn");
+    if (hideBtn) hideBtn.onclick = hideFirstRunBanner;
+
+    // run once on load
+    setStratumFromHost();
+    showFirstRunBannerIfNeeded();
+
+    refresh();
+    setInterval(refresh, REFRESH);
+  </script>
+</body>
 </html>
