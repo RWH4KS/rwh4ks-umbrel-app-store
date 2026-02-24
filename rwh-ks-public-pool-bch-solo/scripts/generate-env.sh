@@ -13,7 +13,7 @@ fi
 
 RPC_USER="bchnrpc"
 RPC_PASS="$(echo -n "${APP_SEED}-bchn-rpc" | sha256sum | awk '{print $1}')"
-RPC_BASIC="$(printf '%s:%s' "$RPC_USER" "$RPC_PASS" | base64 -w0)"
+RPC_BASIC="$(printf '%s:%s' "$RPC_USER" "$RPC_PASS" | base64 | tr -d '\n')"
 
 # Prune/db
 cat > "${APP_DIR}/.env" <<ENVEOF
