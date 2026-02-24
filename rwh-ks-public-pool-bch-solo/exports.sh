@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# App directory
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Umbrel should set these
+: "${APP_SEED:?APP_SEED is required (Umbrel should set this)}"
+export APP_DATA_DIR="${APP_DATA_DIR:-$APP_DIR}"
+
 # Umbrel sets APP_SEED + APP_DATA_DIR at install/runtime.
 # Derive per-install secrets from APP_SEED
 : "${APP_DATA_DIR:?APP_DATA_DIR is not set (Umbrel should set this)}"
