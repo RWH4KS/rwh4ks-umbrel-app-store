@@ -3,8 +3,13 @@ set -euo pipefail
 
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-# APP_SEED for Umbrel; Local dev can export
-: "${APP_SEED:?APP_SEED is required}"
+# For local dev: you can export APP_SEED
+# For Umbrel: APP_SEED is provided by the platform (or seed file logic in exports.sh)
+if [[ -z "${APP_SEED:-}" ]]; then
+  echo "APP_SEED is not set. This script is intended for local development."
+  echo "If you meant to run it locally: export APP_SEED first."
+  exit 0
+fi
 
 RPC_USER="bchnrpc"
 RPC_PASS="$(echo -n "${APP_SEED}-bchn-rpc" | sha256sum | awk '{print $1}')"
