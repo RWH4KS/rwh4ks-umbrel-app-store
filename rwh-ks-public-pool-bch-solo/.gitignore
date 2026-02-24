@@ -4,6 +4,10 @@ data/
 .env.*
 *.log
 
+# Runtime secrets
+app-data/
+**/app_seed
+
 # OS / temp
 *.swp
 *.bak
