@@ -17,7 +17,7 @@ services:
     stop_grace_period: 10s
     networks:
       - internal
-    ports:
+    expose:
       - "80"
     volumes:
       - ./dashboard:/usr/share/nginx/html:ro
