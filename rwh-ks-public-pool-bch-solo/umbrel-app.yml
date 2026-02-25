@@ -19,6 +19,7 @@ developer: RWH4KS
 gallery:
   - https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/master/rwh-ks-public-pool-bch-solo/hero.svg
 services:
+  - app_proxy
   - web
   - public-pool
 dependencies: []
