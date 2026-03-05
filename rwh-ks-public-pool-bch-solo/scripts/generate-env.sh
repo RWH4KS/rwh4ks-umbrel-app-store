@@ -5,7 +5,7 @@ APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APP_DATA_DIR="${APP_DATA_DIR:-$APP_DIR}"
 
 DATA_DIR="${APP_DATA_DIR}/data"
-SEED_FILE="${APP_DIR}/app_seed"
+SEED_FILE="${APP_DATA_DIR}/app_seed"
 
 mkdir -p "${DATA_DIR}"
 chown -R umbrel:umbrel "${DATA_DIR}" 2>/dev/null || true
