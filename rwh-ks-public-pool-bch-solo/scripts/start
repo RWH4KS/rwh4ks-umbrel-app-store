@@ -11,5 +11,4 @@ bash "${APP_DIR}/scripts/generate-env.sh"
 
 cd "${APP_DIR}"
 
-./scripts/generate-env.sh
 docker compose up -d --force-recreate
