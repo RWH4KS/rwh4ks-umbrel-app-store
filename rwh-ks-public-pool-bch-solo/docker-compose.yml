@@ -42,8 +42,6 @@ services:
     depends_on:
       bchn:
         condition: service_healthy
-    env_file:
-      - ./.env
     networks:
       - internal
     expose:
