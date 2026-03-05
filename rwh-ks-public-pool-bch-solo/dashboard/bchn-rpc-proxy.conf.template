@@ -7,7 +7,7 @@ server {
   location / {
     proxy_http_version 1.1;
     proxy_set_header Host bchn;
-    proxy_set_header Authorization "Basic ${BCH_RPC_BASIC}";
+    proxy_set_header Authorization "Basic ${BASIC_AUTH}";
     proxy_set_header Connection "";
     proxy_pass http://bchnrpc;
   }
