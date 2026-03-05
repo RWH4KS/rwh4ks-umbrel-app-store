@@ -58,7 +58,7 @@ services:
     command: >
       /bin/sh -lc '
         set -e;
-        : "${BCH_RPC_BASIC:?BCH_RPC_BASIC is missing}";
+        : "$${BCH_RPC_BASIC:?BCH_RPC_BASIC is missing}";
         envsubst < /templates/bchn-rpc-proxy.conf.template > /etc/nginx/conf.d/default.conf;
         nginx -t;
         exec nginx -g "daemon off;";
