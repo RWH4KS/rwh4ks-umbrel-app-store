@@ -3,7 +3,7 @@ set -euo pipefail
 
 # App directory
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "APP_DIR"
+cd "$APP_DIR"
 
 # Umbrel should set these
 export APP_DATA_DIR="${APP_DATA_DIR:-$APP_DIR}"
