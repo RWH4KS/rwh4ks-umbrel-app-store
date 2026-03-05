@@ -5,7 +5,6 @@ services:
     restart: on-failure
     depends_on:
       - web
-    change all 
     env_file:
       - ./.env
     environment:
