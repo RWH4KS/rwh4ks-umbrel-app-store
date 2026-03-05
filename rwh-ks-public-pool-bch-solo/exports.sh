@@ -7,6 +7,13 @@ APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Umbrel should set these
 export APP_DATA_DIR="${APP_DATA_DIR:-$APP_DIR}"
 
+mkdir -p "$APP_DIR/data"
+
+# If missing creates .env & app_seed
+if [[ ! -f "$APP_DIR/.env" ]]; then
+  bash "$APP_DIR/scripts/generate-env.sh"
+fi
+
 # Umbrel sets APP_SEED + APP_DATA_DIR at install/runtime.
 # Derive per-install secrets from APP_SEED
 SEED_FILE="${APP_DATA_DIR}/app_seed"
