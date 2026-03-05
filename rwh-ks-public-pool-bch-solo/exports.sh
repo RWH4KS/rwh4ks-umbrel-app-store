@@ -8,7 +8,7 @@ cd "$APP_DIR"
 # Umbrel should set these
 export APP_DATA_DIR="${APP_DATA_DIR:-$APP_DIR}"
 
-mkdir -p "$APP_DIR/data"
+mkdir -p "${APP_DATA_DIR}/data"
 
 # If missing creates .env & app_seed
 if [[ ! -f "$APP_DIR/.env" ]]; then
