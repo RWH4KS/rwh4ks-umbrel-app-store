@@ -7,7 +7,7 @@ services:
       - web
     change all 
     env_file:
-      - ${APP_DATA_DIR}/.env
+      - ./.env
     environment:
       APP_HOST: web
       APP_PORT: 80
@@ -27,7 +27,7 @@ services:
     restart: on-failure
     stop_grace_period: 10s
     env_file:
-      - ${APP_DATA_DIR}/.env
+      - ./.env
     networks:
       - internal
 #    ports:
@@ -44,7 +44,7 @@ services:
       bchn:
         condition: service_healthy
     env_file:
-      - ${APP_DATA_DIR}/.env
+      - ./.env
     networks:
       - internal
     expose:
@@ -71,7 +71,7 @@ services:
     restart: on-failure
     stop_grace_period: 60s
     env_file:
-      - ${APP_DATA_DIR}/.env
+      - ./.env
     healthcheck:
       test:
         - CMD-SHELL
@@ -112,7 +112,7 @@ services:
     restart: on-failure
     stop_grace_period: 60s
     env_file:
-      - ${APP_DATA_DIR}/.env
+      - ./.env
     environment:
       MYSQL_DATABASE: ${APP_MARIADB_DATABASE}
       MYSQL_USER: ${APP_MARIADB_USER}
@@ -145,7 +145,7 @@ services:
       - mariadb
       - memcached
     env_file:
-      - ${APP_DATA_DIR}/.env
+      - ./.env
     environment:
       DB_HOST: mariadb
       DB_NAME: ${APP_MARIADB_DATABASE}
@@ -169,7 +169,7 @@ services:
       memcached:
         condition: service_started
     env_file:
-      - ${APP_DATA_DIR}/.env
+      - ./.env
     environment:
       BCH_RPC_URL: http://bchn_rpc_proxy:8332
       BITCOIN_RPC_URL: http://bchn_rpc_proxy
