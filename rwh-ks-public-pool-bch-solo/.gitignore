@@ -4,6 +4,10 @@ data/
 .env.*
 *.log
 
+# Gen. nginx confs
+dashboard/app_proxy.conf
+dashboard/bchn-rpc-proxy.conf
+
 # Runtime secrets
 app-data/
 **/app_seed

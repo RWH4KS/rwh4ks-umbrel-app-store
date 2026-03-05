@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+mkdir -p "$APP_DIR/data"
+chown -R umbrel:umbrel "$APP_DIR/data" 2>/dev/null || true
+chmod -R u+rwX,go-rwx "$APP_DIR/data" 2>/dev/null || true
+
+bash "${APP_DIR}/scripts/generate-env.sh"
+
+cd "${APP_DIR}"
+
+./scripts/generate-env.sh
+docker compose up -d --force-recreate
