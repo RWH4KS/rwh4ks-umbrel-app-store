@@ -53,15 +53,17 @@ MANAGER_IP="${MANAGER_IP:-}"
 UMBREL_AUTH_SECRET="${UMBREL_AUTH_SECRET:-}"
 JWT_SECRET="${JWT_SECRET:-}"
 
-if [[ -z "${MANAGER_IP}" || -z "${UMBREL_AUTH_SECRET}" ]]; then
-  if command -v docker >/dev/null 2>&1; then
-    # Your box shows an "auth" container exposing 2000->2000; that's the best anchor.
-    MANAGER_CTN="$(docker ps --format '{{.Names}} {{.Ports}}' | awk '/:2000->2000\/tcp/ {print $1; exit}')"
+if command -v docker >/dev/null 2>&1; then
+  if [[ -z "${MANAGER_IP}" || -z "${UMBREL_AUTH_SECRET}" || -z "${JWT_SECRET}" ]]; then
+    MANAGER_CTN="$(
+      docker ps --format '{{.Names}} {{.Ports}}' | awk '/:2000->2000\/tcp/ {print $1; exit}'
+    )"
 
-    # Fallback: if container is literally named "auth"
     if [[ -z "${MANAGER_CTN}" ]]; then
       if docker ps --format '{{.Names}}' | grep -qx 'auth'; then
         MANAGER_CTN='auth'
+      else
+        MANAGER_CTN=''
       fi
     fi
 
@@ -89,21 +91,15 @@ if [[ -z "${MANAGER_IP}" || -z "${UMBREL_AUTH_SECRET}" ]]; then
   fi
 fi
 
-# Last resort: MANAGER_IP from default gateway (fine)
+# Last resort: MANAGER_IP from default gateway
 if [[ -z "${MANAGER_IP}" ]]; then
   MANAGER_IP="$(ip route | awk '/default/ {print $3; exit}' || true)"
 fi
 
-# IMPORTANT: do NOT invent Umbrel secret for real installs
-# If it's still empty, leave it empty and warn.
-if [[ -z "${UMBREL_AUTH_SECRET}" ]]; then
-  echo "WARNING: UMBREL_AUTH_SECRET could not be discovered from Umbrel manager/auth."
-  echo "         The Umbrel tile auth will FAIL until this is set correctly."
-fi
-
-if [[ -z "${JWT_SECRET}" ]]; then
-  echo "WARNING: JWT_SECRET could not be discovered from Umbrel auth."
-  echo "         The Umbrel tile auth will FAIL until JWT_SECRET is set correctly."
+# Hard fail if Umbrel auth secrets are missing
+if [[ -z "${UMBREL_AUTH_SECRET}" || -z "${JWT_SECRET}" ]]; then
+  echo "ERROR: Could not determine Umbrel auth secrets on this system." >&2
+  exit 1
 fi
 
 cat > "${APP_DIR}/.env" <<EOF
