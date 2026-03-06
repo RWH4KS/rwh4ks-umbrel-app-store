@@ -123,5 +123,5 @@ chmod 600 "${APP_DIR}/.env" || true
 echo "Wrote ${APP_DIR}/.env"
 echo "APP_UI_PORT=${APP_UI_PORT}"
 echo "MANAGER_IP=${MANAGER_IP:-<empty>}"
-echo "UMBREL_AUTH_SECRET=${UMBREL_AUTH_SECRET:-<empty>}"
-echo "JWT_SECRET=${JWT_SECRET:-<empty>}"
+echo "UMBREL_AUTH_SECRET=<set>"
+echo "JWT_SECRET=<set>"
