@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_DIR="$(cd "$(dirname "$BASH_SOURCE[0]}")/.." && pwd)"
-cd "${APP_DIR}"
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export APP_DATA_DIR="${APP_DATA_DIR:-$APP_DIR}"
 
+cd "${APP_DIR}"
 docker compose down
