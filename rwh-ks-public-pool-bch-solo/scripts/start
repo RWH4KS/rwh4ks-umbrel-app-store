@@ -2,13 +2,13 @@
 set -euo pipefail
 
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export APP_DATA_DIR="${APP_DATA_DIR:-$APP_DIR}"
 
-mkdir -p "$APP_DIR/data"
-chown -R umbrel:umbrel "$APP_DIR/data" 2>/dev/null || true
-chmod -R u+rwX,go-rwx "$APP_DIR/data" 2>/dev/null || true
+mkdir -p "${APP_DATA_DIR}/data"
+chown -R umbrel:umbrel "${APP_DATA_DIR}/data" 2>/dev/null || true
+chmod -R u+rwX,go-rwx "${APP_DATA_DIR}/data" 2>/dev/null || true
 
 bash "${APP_DIR}/scripts/generate-env.sh"
 
 cd "${APP_DIR}"
-
 docker compose up -d --force-recreate
