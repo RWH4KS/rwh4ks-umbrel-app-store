@@ -34,7 +34,7 @@ else
 fi
 
 # ---- Derived config ----
-APP_UI_PORT="${APP_UI_PORT:-8080}"
+# APP_UI_PORT="${APP_UI_PORT:-8080}"
 APP_BCHN_PRUNE_MIB="${APP_BCHN_PRUNE_MIB:-20480}"
 
 APP_BCHN_RPC_USER="bchnrpc"
