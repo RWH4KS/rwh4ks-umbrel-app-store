@@ -7,9 +7,9 @@ category: Utilities
 version: "0.1.4"
 port: 8080
 description: >-
-   Self-hosted BCH solo mining pool with BCHN (pruned), Stratum, API, and a lightweight web dashboard for Raspberry Pi 5.
+   Self-hosted BCH solo mining pool with BCHN (pruned), Stratum, API, and a lightweight web dashboard for Raspberry Pi 5. No APP tile
 
-   Stratum exposed on port 3563. Should also work on Raspberry Pi 4.
+   Stratum exposed on port 3563. To Access Dashboard (Umbrel.Local:8080) example 192.x.x.x:8080
 
    Support development - BCH (Legacy) - 17MmQyaBxdQp1E5WqU3T8iBBtcfFwRtxGd
 
