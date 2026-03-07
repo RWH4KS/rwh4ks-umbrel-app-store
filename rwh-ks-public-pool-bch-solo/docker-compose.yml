@@ -14,8 +14,8 @@ services:
       JWT_SECRET: ${JWT_SECRET}
     volumes:
       - ./umbrel-app.yml:/extra/umbrel-app.yml:ro
-    ports:
-      - "${APP_UI_PORT:-8080}:4000"
+#    ports:
+#      - "${APP_UI_PORT:-8080}:4000"
     networks:
       - internal
       - umbrel_main_network
@@ -98,7 +98,7 @@ services:
       - '-rpcuser=${APP_BCHN_RPC_USER}'
       - '-rpcpassword=${APP_BCHN_RPC_PASSWORD}'
     volumes:
-      - ./data/bchn:/root/.bitcoin
+      - ${APP_DATA_DIR)/data/bchn:/root/.bitcoin
     networks:
       internal:
         aliases:
@@ -117,7 +117,7 @@ services:
       MYSQL_PASSWORD: ${APP_MARIADB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${APP_MARIADB_ROOT_PASSWORD}
     volumes:
-      - ./data/mariadb:/var/lib/mysql
+      - ${APP_DATA_DIR}/data/mariadb:/var/lib/mysql
     networks:
       - internal
 
