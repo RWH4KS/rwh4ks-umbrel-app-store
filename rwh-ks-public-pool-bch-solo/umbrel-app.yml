@@ -4,7 +4,7 @@ name: RWH4KS Public Pool (BCH Solo)
 tagline: Solo-mine BCH on ARM64 with your own self-contained pool + pruned node
 icon: https://raw.githubusercontent.com/RWH4KS/rwh4ks-umbrel-app-store/master/rwh-ks-public-pool-bch-solo/icon.png
 category: Utilities
-version: "0.1.3"
+version: "0.1.4"
 port: 80
 description: >-
    Self-hosted BCH solo mining pool with BCHN (pruned), Stratum, API, and a lightweight web dashboard for Raspberry Pi 5.
