@@ -1,0 +1,23 @@
+manifestVersion: 1.1
+id: rwh-bcii-node
+name: BC2 Node
+tagline: Run a Bitcoin II full node on ARM64
+icon: ./icon.png
+category: Utilities
+version: "0.1.0"
+port: 8080
+description: >-
+  Run a Bitcoin II (BC2) full node on ARM64 with a lightweight web interface for monitoring.
+
+  Built for self-hosting on UmbrelOS on Raspberry Pi.
+
+developer: RWH4KS
+website: https://bitcoin-ii.org/
+repo: https://bitcoin-ii.org/
+support: https://bc2explorer.com/
+gallery:
+  - ./hero.svg
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
