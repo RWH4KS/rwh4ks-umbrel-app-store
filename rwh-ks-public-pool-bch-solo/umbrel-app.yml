@@ -1,4 +1,4 @@
-manifestVersion: 1
+manifestVersion: 1.1
 id: rwh-ks-public-pool-bch-solo
 name: RWH4KS Public Pool (BCH Solo)
 tagline: Solo-mine BCH on ARM64 with your own self-contained pool + pruned node
