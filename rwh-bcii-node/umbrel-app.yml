@@ -5,7 +5,7 @@ tagline: Run a Bitcoin II full node on ARM64
 icon: ./icon.png
 category: Utilities
 version: "0.1.0"
-port: 8080
+port: 8081
 description: >-
   Run a Bitcoin II (BC2) full node on ARM64 with a lightweight web interface for monitoring.
 
